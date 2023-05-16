@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.Set;
+
 
 @Entity @Data
 @Table(name = "subcategories")
@@ -15,14 +17,17 @@ public class Subcategory {
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    @Column(name = "subcategory_id")
-   Long id;
+   private Long id;
 
    @NonNull
    @Column(name = "subcategory_name",nullable = true)
-   String name;
+   private String name;
 
    @ManyToOne
    @JoinColumn(name = "category_id", nullable = false)
-   Category category;
+   private Category category;
+
+   @OneToMany(mappedBy = "subcategory")
+   private Set<Test> testSet;
 
 }
