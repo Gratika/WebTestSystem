@@ -8,6 +8,7 @@ import lombok.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity @Data
 @NoArgsConstructor(force = true)
@@ -17,34 +18,40 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
-    Long id;
+    private Long id;
 
     @NonNull
     @Column(name = "login", nullable = false,unique = true)
-    String login;
+    private String login;
 
     @NonNull
     @Column(name = "password", nullable = false)
-    String password;
+    private String password;
 
     @NonNull
     @Column(name = "email", nullable = false,unique = true)
-    String email;
+    private String email;
 
     @NonNull
     @Column(name = "is_active", columnDefinition = "integer default 1")
-    Boolean isActive;
+    private Boolean isActive;
 
     @Nullable
     @Column(name = "name", nullable = true)
-    String name;
+    private String name;
 
     @Nullable
     @Column(name = "surname", nullable = true)
-    String surname;
+    private String surname;
 
     @Nullable
     @Column(name = "birthday", nullable = true)
-    Date birthday;
+    private Date birthday;
+
+    @OneToMany(mappedBy = "user")
+    private Set<UserRole> RoleSet;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Test> testSet;
 
 }
