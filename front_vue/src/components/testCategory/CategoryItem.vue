@@ -1,11 +1,11 @@
 <template>
   <div>
       <p>
-          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#subcategory" aria-expanded="false" aria-controls="subcategory">
+          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#{category.name}" aria-expanded="false" aria-controls="subcategory">
               {{category.name}}
           </button>
       </p>
-      <div class="collapse ms-1" id="subcategory">
+      <div class="collapse ms-1" id={{category.name}}>
           <SubcategoryItem
               v-for="subcat in subcategories"
               v-bind:key="subcat.id"

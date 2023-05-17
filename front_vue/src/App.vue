@@ -18,15 +18,15 @@ export default {
     {id:4,name:'Cat4'}
    ],
    subcategoryList: [
-    {id:1,name:subcat1, category_id:1},
-    {id:2,name:subcat2, category_id:1},
-    {id:3,name:subcat1, category_id:2},
-    {id:4,name:subcat4, category_id:2},
-    {id:5,name:subcat1, category_id:3},
-    {id:6,name:subcat5, category_id:3},
-    {id:7,name:subcat4, category_id:4},
-    {id:8,name:subcat8, category_id:4},
-    {id:9,name:subcat12, category_id:4},
+    {id:1,name:'subcat1', category_id:1},
+    {id:2,name:'subcat2', category_id:1},
+    {id:3,name:'subcat1', category_id:2},
+    {id:4,name:'subcat4', category_id:2},
+    {id:5,name:'subcat1', category_id:3},
+    {id:6,name:'subcat5', category_id:3},
+    {id:7,name:'subcat4', category_id:4},
+    {id:8,name:'subcat8', category_id:4},
+    {id:9,name:'subcat12', category_id:4},
    ]
   }
  },
@@ -38,7 +38,10 @@ export default {
    <Navbar/>
  </div>
  <div class="my_aside">
-  <CategoryList/>
+  <CategoryList
+      :categories="categoryList"
+      :subcategoryList="subcategoryList"
+  />
  </div>
  <div>
   <TestList :tests="tests"/>

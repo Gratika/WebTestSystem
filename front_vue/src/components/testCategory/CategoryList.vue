@@ -4,7 +4,7 @@
               v-for="category in categories"
               v-bind:key="category.id"
               :category="category"
-              :subcategories="subcategoryList.filter(subcat=>subcat.category_id=category.id)"
+              :subcategories="subcategoryList.filter(subcat=>subcat.category_id==category.id)"
       />
   </div>
 </template>
