@@ -37,30 +37,56 @@ export default {
  <div class="my_header">
    <Navbar/>
  </div>
- <div class="my_aside">
-  <CategoryList
-      :categories="categoryList"
-      :subcategoryList="subcategoryList"
-  />
+
+ <div class="my_content">
+  <div class="my_aside ps-3">
+   <CategoryList
+       :categories="categoryList"
+       :subcategoryList="subcategoryList"
+   />
+  </div>
+  <div class="my_article">
+   <TestList :tests="tests"/>
+  </div>
  </div>
- <div>
-  <TestList :tests="tests"/>
- </div>
+
  <div class="my_footer">footer</div>
 </template>
 
 <style scoped>
+.my_article{
+ background: white;
+ box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45), 0px 25px 20px -20px rgba(0, 0, 0, 0.45), -25px 0 20px -20px rgba(0, 0, 0, 0.45);
+ border-radius: 20px;
+ grid-column-start: 2;
+ grid-column-end: 3;
+ padding: 2rem;
+}
 .my_aside{
-
+ color: var(--color-text-2);
+ background: white;
+ box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45), 0px 25px 20px -20px rgba(0, 0, 0, 0.45), -25px 0 20px -20px rgba(0, 0, 0, 0.45);
+ border-radius: 20px;
+ grid-column-start: 1;
+ grid-column-end: 2;
+ padding: 2rem;
+}
+.my_content{
+ display: grid;
+ grid-column-start: 2;
+ grid-column-end: 3;
+ grid-column-gap: 20px;
+ grid-template-columns: 1fr 4fr;
 }
 .my_header {
- background: #661B0A;
- color: #E6D1CC;
+ background: var(--background-1);
+ color: var(--color-text-1);
  grid-column-start: 1;
  grid-column-end: 4;
  line-height: 1.5;
 }
 .my_footer {
+ background: var(--background-1);
  grid-column-start: 1;
  grid-column-end: 4;
  line-height: 1.5;

@@ -1,27 +1,34 @@
 <template>
   <div>
-      <p>
-          <button class="btn" type="button" data-bs-toggle="collapse" data-bs-target="#{category.name}" aria-expanded="false" aria-controls="subcategory">
-              {{category.name}}
-          </button>
-      </p>
-      <div class="collapse ms-1" id={{category.name}}>
-          <SubcategoryItem
-              v-for="subcat in subcategories"
-              v-bind:key="subcat.id"
-              :subcategory="subcat"
-          />
-      </div>
+      <button class="btn" type="button" @click="subcategoryShow = !subcategoryShow">
+          {{category.name}}
+      </button>
+      <SubcategoryList
+      :subcategories="subcategories"
+      :isShow="subcategoryShow"/>
   </div>
 </template>
 <script>
 import SubcategoryItem from "@/components/testCategory/SubcategoryItem.vue";
+import SubcategoryList from "@/components/testCategory/SubcategoryList.vue";
 export  default {
-    components: {SubcategoryItem},
+    components: {SubcategoryList},
     props:{
         category:{},
         subcategories:[],
+    },
+    data(){
+        return{
+            subcategoryShow:false,
+        }
+
     }
 }
 </script>
-<style></style>
+<style scoped>
+.btn{
+    text-align: start;
+    font-size: 1.1rem;
+    width: 100%;
+}
+</style>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-3 pe-3">
       <CategoryItem
               v-for="category in categories"
               v-bind:key="category.id"

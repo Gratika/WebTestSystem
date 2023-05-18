@@ -6,7 +6,7 @@
             </div>
             <div class="card-body">
                 <p class="card-text">{{ test.body }}</p>
-                <a href="#" class="btn btn-primary">Розпочати</a>
+                <button class="btn">Розпочати</button>
             </div>
         </div>
     </div>
@@ -21,12 +21,35 @@ export default {
 
 }
 </script>
-<style>
+<style scoped>
  .card-header {
      background: var(--background-2);
-     color: var(--color-text-2)
+     border: none;
+     text-align: center;
  }
  .card{
+     border: 1px solid var(--background-2);
+     box-shadow: rgba(126, 248, 197, 0.63) 0px 0px 0.25em, rgba(48, 154, 110, 0.2) 0px 0.25em 1em;
+     color: var(--color-text-2);
      min-width: 200px;
+     max-width: 400px;
+     min-height: 150px;
+     max-height: 400px;
+     height: 100%;
+
+ }
+ .card-body{
+     align-items: flex-end;
+     display: flex;
+     justify-content: space-between;
+     flex-wrap: wrap;
+     flex-direction: column;
+ }
+ .card-text{
+     width: 100%;
+ }
+ .btn{
+     background: var(--background-2);
+     justify-items: end;
  }
 </style>

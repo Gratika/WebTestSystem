@@ -1,15 +1,18 @@
 @import './base.css';
 
  #app {
+     background: var(--color-text-1);
     display: grid;
-    grid-template-columns: 1fr 3fr;
-    grid-template-rows: 1fr 5fr 1fr;
-     height: 100%;
+    grid-template-columns: 2fr  12fr 2fr;
+    grid-template-rows: 1fr 15fr 1fr;
+    grid-row-gap: 20px;
+    height: 100vh;
 
 }
 :root{
-    --color-text-1:#E6D1CC;
-    --background-1:#661B0A;
-    --background-2: #EA8670;
-    --color-text-2:#665D5B;
+    --color-text-1:#CAEEE7;
+    --background-1:#3B6B61;
+    --background-2: #81EBD5;
+    --color-text-2:#5B6B68;
+    --add_color_dark:#65B8A7
 }
