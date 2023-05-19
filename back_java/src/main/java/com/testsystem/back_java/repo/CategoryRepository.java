@@ -1,9 +1,7 @@
-package repo;
+package com.testsystem.back_java.repo;
 
-import models.Category;
+import com.testsystem.back_java.models.Category;
 import org.springframework.data.repository.CrudRepository;
-
-import java.util.List;
 
 public interface CategoryRepository extends CrudRepository<Category,Long> {
 

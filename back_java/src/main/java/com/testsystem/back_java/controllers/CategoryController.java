@@ -1,9 +1,8 @@
-package controllers;
+package com.testsystem.back_java.controllers;
 
-import models.Category;
-import org.springframework.stereotype.Controller;
+import com.testsystem.back_java.models.Category;
+import com.testsystem.back_java.repo.CategoryRepository;
 import org.springframework.web.bind.annotation.RestController;
-import repo.CategoryRepository;
 
 import java.util.ArrayList;
 import java.util.List;

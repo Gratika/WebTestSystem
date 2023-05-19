@@ -1,4 +1,4 @@
-package models;
+package com.testsystem.back_java.models;
 
 
 import jakarta.persistence.*;
@@ -15,7 +15,7 @@ import java.util.Set;
 @Table(name = "categories")
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "category_id")
     private Long id;
 

@@ -1,6 +1,6 @@
-package repo;
+package com.testsystem.back_java.repo;
 
-import models.User;
+import com.testsystem.back_java.models.User;
 import org.springframework.data.repository.CrudRepository;
 
 public interface UserRepository extends CrudRepository<User, Long> {
