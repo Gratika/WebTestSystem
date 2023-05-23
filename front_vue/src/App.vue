@@ -1,99 +1,46 @@
 <script >
-import TestList from "@/components/TestList.vue";
-import Navbar from "@/components/TestNavbar.vue";
-import CategoryList from "@/components/testCategory/CategoryList.vue";
+import TestNavbar from "@/components/TestNavbar.vue";
+
 export default {
- components: {CategoryList, Navbar, TestList},
- data() {
-  return {
-   tests:[
-    {id:1, title:'Javascript', body: 'опис посту'},
-    {id:2, title:'Java', body: 'опис посту'},
-    {id:3, title:'Vue', body: 'опис посту'}
-   ],
-   categoryList:[
-    {id:1,name:'Cat1'},
-    {id:2,name:'Cat2'},
-    {id:3,name:'Cat3'},
-    {id:4,name:'Cat4'}
-   ],
-   subcategoryList: [
-    {id:1,name:'subcat1', category_id:1},
-    {id:2,name:'subcat2', category_id:1},
-    {id:3,name:'subcat1', category_id:2},
-    {id:4,name:'subcat4', category_id:2},
-    {id:5,name:'subcat1', category_id:3},
-    {id:6,name:'subcat5', category_id:3},
-    {id:7,name:'subcat4', category_id:4},
-    {id:8,name:'subcat8', category_id:4},
-    {id:9,name:'subcat12', category_id:4},
-   ],
-    isCanModify:true,
-  }
- },
+    components: {TestNavbar}
 }
 </script>
 
 <template>
- <div class="my_header">
-   <Navbar/>
- </div>
-
- <div class="my_content">
-  <div class="my_aside ps-3">
-   <CategoryList
-       :categories="categoryList"
-       :subcategoryList="subcategoryList"
-       :isCanModify="isCanModify"
-   />
+  <div class="my_header">
+      <TestNavbar/>
   </div>
-  <div class="my_article">
-   <TestList :tests="tests"/>
-  </div>
- </div>
+  <div class="my_content ">
+      <div class="main_header">
+          <div class="main_text">
+              <h1>Тренуй свій мозок сьогодні</h1>
+              <p>Перевірте свої знання з будь-якого предмета шкільної програми!</p>
+          </div>
+          <img class="main_img" src="@/assets/img/main_page.avif">
 
- <div class="my_footer">footer</div>
+      </div>
+  </div>
+  <div class="my_footer"></div>
+
 </template>
 
 <style scoped>
-.my_article{
- background: white;
- box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45), 0px 25px 20px -20px rgba(0, 0, 0, 0.45), -25px 0 20px -20px rgba(0, 0, 0, 0.45);
- border-radius: 20px;
- grid-column-start: 2;
- grid-column-end: 3;
- padding: 2rem;
-}
-.my_aside{
- color: var(--color-text-2);
- background: white;
- box-shadow: 0px -25px 20px -20px rgba(0, 0, 0, 0.45), 25px 0 20px -20px rgba(0, 0, 0, 0.45), 0px 25px 20px -20px rgba(0, 0, 0, 0.45), -25px 0 20px -20px rgba(0, 0, 0, 0.45);
- border-radius: 20px;
- grid-column-start: 1;
- grid-column-end: 2;
- padding: 2rem;
-}
 .my_content{
- display: grid;
- grid-column-start: 2;
- grid-column-end: 3;
- grid-column-gap: 20px;
- grid-template-columns: 1fr 4fr;
+    background: white;
+    grid-column-start: 2;
+    grid-column-end: 3;
+    display: flex;
 }
-.my_header {
- background: var(--background-1);
- color: var(--color-text-1);
- grid-column-start: 1;
- grid-column-end: 4;
- line-height: 1.5;
+.main_header{
+    display: flex;
+    padding: 2rem 1rem;
 }
-.my_footer {
- background: var(--background-1);
- grid-column-start: 1;
- grid-column-end: 4;
- line-height: 1.5;
-}
+.main_img {
+    border-radius: 100%;
 
-
+}
+.main_text{
+    margin: 0 1rem;
+}
 
 </style>

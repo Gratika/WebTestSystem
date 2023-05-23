@@ -5,9 +5,21 @@
     display: grid;
     grid-template-columns: 2fr  12fr 2fr;
     grid-template-rows: 1fr 15fr 1fr;
-    grid-row-gap: 20px;
     height: 100vh;
 
+}
+.my_header {
+    background: var(--background-1);
+    color: var(--color-text-1);
+    grid-column-start: 1;
+    grid-column-end: 4;
+    line-height: 1.5;
+}
+.my_footer {
+    background: var(--background-1);
+    grid-column-start: 1;
+    grid-column-end: 4;
+    line-height: 1.5;
 }
 :root{
     --color-text-1:#CAEEE7;
