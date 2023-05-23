@@ -5,7 +5,8 @@
       </button>
       <SubcategoryList
       :subcategories="subcategories"
-      :isShow="subcategoryShow"/>
+      :isShow="subcategoryShow"
+      :isCanModify = "isCanModify"/>
   </div>
 </template>
 <script>
@@ -16,6 +17,7 @@ export  default {
     props:{
         category:{},
         subcategories:[],
+        isCanModify:Boolean,
     },
     data(){
         return{

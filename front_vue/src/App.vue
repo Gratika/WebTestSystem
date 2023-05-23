@@ -27,7 +27,8 @@ export default {
     {id:7,name:'subcat4', category_id:4},
     {id:8,name:'subcat8', category_id:4},
     {id:9,name:'subcat12', category_id:4},
-   ]
+   ],
+    isCanModify:true,
   }
  },
 }
@@ -43,6 +44,7 @@ export default {
    <CategoryList
        :categories="categoryList"
        :subcategoryList="subcategoryList"
+       :isCanModify="isCanModify"
    />
   </div>
   <div class="my_article">

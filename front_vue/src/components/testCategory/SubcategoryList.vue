@@ -6,7 +6,11 @@
          :subcategory="subcategory"
 
       />
+    <div v-if="isCanModify">
+      <button class="btn">Додати</button>
+    </div>
   </div>
+
 </template>
 <script>
 
@@ -17,10 +21,13 @@ export default defineComponent({
     components: {SubcategoryItem},
     props:{
         subcategories:[],
-        isShow:Boolean
+        isShow:Boolean,
+        isCanModify:Boolean,//користувач має право змінювати дані
     }
 })
 </script>
 <style scoped>
-
+.btn{
+  background: var(--background-2);
+}
 </style>
