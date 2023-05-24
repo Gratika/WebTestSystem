@@ -35,10 +35,6 @@ export default {
 </script>
 
 <template>
-    <div class="test_list">
-        <div class="my_header">
-            <Navbar/>
-        </div>
         <div class="my_content">
             <div class="my_aside ps-3">
                 <CategoryList
@@ -51,8 +47,6 @@ export default {
                 <TestList :tests="tests"/>
             </div>
         </div>
-        <div class="my_footer">footer</div>
-    </div>
 
 </template>
 
@@ -80,17 +74,8 @@ export default {
     grid-column-end: 3;
     grid-column-gap: 20px;
     grid-template-columns: 1fr 4fr;
+    height: 100%;
 }
-
-.test_list{
-    background: var(--color-text-1);
-    display: grid;
-    grid-template-columns: 2fr  12fr 2fr;
-    grid-template-rows: 1fr 15fr 1fr;
-    grid-row-gap: 20px;
-    height: 100vh;
-}
-
 
 
 </style>
