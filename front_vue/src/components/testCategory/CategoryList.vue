@@ -15,6 +15,13 @@
 </template>
 <script>
 import {defineComponent} from "vue";
+const props=defineProps({
+    categories:{
+        type:Object,
+        required:true,
+        default:()=>{}
+    }
+})
 import CategoryItem from "@/components/testCategory/CategoryItem.vue";
 
 export default defineComponent({

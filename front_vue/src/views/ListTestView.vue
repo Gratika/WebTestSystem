@@ -1,9 +1,10 @@
 <script >
 import TestList from "@/components/TestList.vue";
-import Navbar from "@/components/TestNavbar.vue";
 import CategoryList from "@/components/testCategory/CategoryList.vue";
+import {useMenuStore} from "@/stores/menu";
+const menuStore=useMenuStore();
 export default {
-    components: {CategoryList, Navbar, TestList},
+    components: {CategoryList, TestList},
     data() {
         return {
             tests:[
