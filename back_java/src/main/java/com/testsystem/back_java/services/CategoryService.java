@@ -1,5 +1,7 @@
 package com.testsystem.back_java.services;
 
+import com.testsystem.back_java.dto.CategoryDto;
+import com.testsystem.back_java.dto.SubcategoryDto;
 import com.testsystem.back_java.models.Category;
 import com.testsystem.back_java.repo.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CategoryService {
@@ -37,5 +40,21 @@ public class CategoryService {
     }
     public void deleteCategory(long id){
         categoryRepository.deleteById(id);
+    }
+
+    public List<CategoryDto> findAllCategoryDto(){
+        return this.findAllCategory()
+                .stream()
+                .map(this::convertEntityInCategoryDto)
+                .collect(Collectors.toList());
+
+    }
+
+    private CategoryDto convertEntityInCategoryDto(Category category){
+        CategoryDto categoryDto=new CategoryDto();
+        categoryDto.setId(category.getId());
+        categoryDto.setName(category.getName());
+        categoryDto.setSubcategoryDtoList(new ArrayList<>());
+        return categoryDto;
     }
 }

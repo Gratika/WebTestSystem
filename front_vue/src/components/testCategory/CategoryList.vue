@@ -1,30 +1,15 @@
-<template>
-  <div class="my-3 pe-3">
-      <CategoryItem
-              v-for="category in categories"
-              v-bind:key="category.id"
-              :category="category"
-              :subcategories="subcategoryList.filter(subcat=>subcat.category_id===category.id)"
-              :isCanModify="isCanModify"
-      />
-    <div>{{isCanModify}}</div>
-    <div v-if="isCanModify">
-      <button class="btn">Додати</button>
-    </div>
-  </div>
-</template>
-<script>
+<script setup>
 import {defineComponent} from "vue";
-const props=defineProps({
-    categories:{
-        type:Object,
-        required:true,
-        default:()=>{}
-    }
-})
 import CategoryItem from "@/components/testCategory/CategoryItem.vue";
-
-export default defineComponent({
+const props = defineProps({
+  categoryDtoList:{
+    type:Object,
+    required:true,
+    default:()=>{}
+  },
+  isCanModify:Boolean
+})
+/*export default defineComponent({
     components: {CategoryItem},
     props:{
         categories:[],
@@ -32,8 +17,22 @@ export default defineComponent({
         isCanModify:Boolean,
     },
 
-})
+})*/
 </script>
+<template>
+  <div class="my-3 pe-3">
+      <CategoryItem
+              v-for="category in categoryDtoList"
+              v-bind:key="category.id"
+              :category="category"
+              :subcategories="category.subcategoryDtoList"
+              :isCanModify="isCanModify"
+      />
+    <div v-if="isCanModify">
+      <button class="btn">Додати</button>
+    </div>
+  </div>
+</template>
 <style scoped>
 .btn{
   background: var(--background-2);

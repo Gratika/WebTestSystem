@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class SubcategoryService {
@@ -43,7 +44,19 @@ public class SubcategoryService {
         subcategoryRepository.deleteById(id);
     }
     public List<SubcategoryDto> findAllSubcategoryDto(){
-        return subcategoryRepository.findAllSubcategoryDto();
+
+        return this.findAllSubcategory()
+                .stream()
+                .map(this::convertEntityToDto)
+                .collect(Collectors.toList());
+    }
+
+    private SubcategoryDto convertEntityToDto(Subcategory subcategory){
+        SubcategoryDto subcategoryDto = new SubcategoryDto();
+        subcategoryDto.setId(subcategory.getId());
+        subcategoryDto.setName(subcategory.getName());
+        subcategoryDto.setCategoryId(subcategory.getCategory().getId());
+        return subcategoryDto;
     }
 
 }

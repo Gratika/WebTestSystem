@@ -1,6 +1,7 @@
 package com.testsystem.back_java.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,6 +24,7 @@ public class Category {
     @Column(name = "category_name", nullable = false)
     private String name;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "category")
     Set<Subcategory> subcategorySet;
 
