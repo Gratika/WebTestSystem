@@ -1,11 +1,14 @@
 package com.testsystem.back_java.controllers;
 
+import com.testsystem.back_java.config.MessageConfig;
 import com.testsystem.back_java.dto.CategoryDto;
 import com.testsystem.back_java.dto.SubcategoryDto;
 import com.testsystem.back_java.models.Category;
 import com.testsystem.back_java.services.CategoryService;
 import com.testsystem.back_java.services.SubcategoryService;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -21,11 +24,13 @@ import java.util.stream.Collectors;
 public class CategoryRestController {
     private final CategoryService categoryService;
     private final SubcategoryService subcategoryService;
+    private final RabbitTemplate template;
 
     @Autowired
-    public CategoryRestController(CategoryService categoryService, SubcategoryService subcategoryService) {
+    public CategoryRestController(CategoryService categoryService, SubcategoryService subcategoryService, RabbitTemplate template) {
         this.categoryService = categoryService;
         this.subcategoryService = subcategoryService;
+        this.template = template;
     }
     @RequestMapping(method = RequestMethod.GET)
     public List<Category> getAllCategory(){
@@ -35,8 +40,9 @@ public class CategoryRestController {
         });
         return categories;
     }
+    /*List<CategoryDto>*/
     @RequestMapping(value = "/categoryDTO", method = RequestMethod.GET) //http://localhost:8080/category/categoryDTO
-    public List<CategoryDto> getAllCategoryDto(){
+    public ResponseEntity<String> getAllCategoryDto(){
         List<CategoryDto> categoryDtoList = categoryService.findAllCategoryDto();
         List<SubcategoryDto> subcategoryDtoList = subcategoryService.findAllSubcategoryDto();
         categoryDtoList.forEach(c->{
@@ -46,7 +52,9 @@ public class CategoryRestController {
                             .collect(Collectors.toList());
             c.setSubcategoryDtoList(filterSubcategoryDtoList);
         });
-        return categoryDtoList;
+        template.convertAndSend(MessageConfig.BACK_EXCHANGE, MessageConfig.GET_CATEGORYDTO_KEY,categoryDtoList);
+       // return categoryDtoList;
+        return ResponseEntity.ok("Success!");
     }
 
 }
