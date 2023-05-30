@@ -16,9 +16,11 @@
 .my_header {
     background: var(--background-1);
     color: var(--color-text-1);
+    font-size: 1.5rem;
     grid-column-start: 1;
     grid-column-end: 4;
     line-height: 1.5;
+    padding: 1rem;
 }
 .my_footer {
     background: var(--background-1);
