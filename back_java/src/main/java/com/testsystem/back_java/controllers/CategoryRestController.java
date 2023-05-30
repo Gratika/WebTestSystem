@@ -42,7 +42,7 @@ public class CategoryRestController {
     }
     /*List<CategoryDto>*/
     @RequestMapping(value = "/categoryDTO", method = RequestMethod.GET) //http://localhost:8080/category/categoryDTO
-    public ResponseEntity<String> getAllCategoryDto(){
+    public ResponseEntity<List<CategoryDto>> getAllCategoryDto(){
         List<CategoryDto> categoryDtoList = categoryService.findAllCategoryDto();
         List<SubcategoryDto> subcategoryDtoList = subcategoryService.findAllSubcategoryDto();
         categoryDtoList.forEach(c->{
@@ -54,7 +54,7 @@ public class CategoryRestController {
         });
         template.convertAndSend(MessageConfig.BACK_EXCHANGE, MessageConfig.GET_CATEGORYDTO_KEY,categoryDtoList);
        // return categoryDtoList;
-        return ResponseEntity.ok("Success!");
+        return ResponseEntity.ok(categoryDtoList);
     }
 
 }

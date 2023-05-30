@@ -1,9 +1,7 @@
-<script >
+<script  setup>
 import TestNavbar from "@/components/TestNavbar.vue";
 
-export default {
-    components: {TestNavbar}
-}
+
 </script>
 
 <template>
