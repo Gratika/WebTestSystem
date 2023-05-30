@@ -52,7 +52,7 @@ public class CategoryRestController {
                             .collect(Collectors.toList());
             c.setSubcategoryDtoList(filterSubcategoryDtoList);
         });
-        template.convertAndSend(MessageConfig.BACK_EXCHANGE, MessageConfig.GET_CATEGORYDTO_KEY,categoryDtoList);
+        template.convertAndSend(MessageConfig.BACK_CATEGORYDTO_EXCHANGE, MessageConfig.GET_CATEGORYDTO_KEY,categoryDtoList);
        // return categoryDtoList;
         return ResponseEntity.ok(categoryDtoList);
     }

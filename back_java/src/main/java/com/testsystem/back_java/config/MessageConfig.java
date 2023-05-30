@@ -12,20 +12,20 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class MessageConfig {
 
-    public static final String BACK_QUEUE ="back_test_queue";
-    public static final String BACK_EXCHANGE ="back_test_exchange";
+    public static final String BACK_CATEGORYDTO_QUEUE ="back_test_queue";
+    public static final String BACK_CATEGORYDTO_EXCHANGE ="back_test_exchange";
     public static final String GET_CATEGORYDTO_KEY ="back_test_routingKey";
     public static final String FRONT_QUEUE ="back_test_queue";
     public static final String FRONT_EXCHANGE ="back_test_exchange";
     public static final String FRONT_ROUTING_KEY ="back_test_routingKey";
     @Bean
     public Queue queue(){
-        return new Queue(BACK_QUEUE);
+        return new Queue(BACK_CATEGORYDTO_QUEUE);
     }
 
     @Bean
     public TopicExchange exchange(){
-        return new TopicExchange(BACK_EXCHANGE);
+        return new TopicExchange(BACK_CATEGORYDTO_EXCHANGE);
     }
 
     @Bean

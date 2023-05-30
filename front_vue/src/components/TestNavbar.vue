@@ -3,10 +3,10 @@
 <template>
     <nav class="my-auto">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+          <router-link to="/public">
                 <img src="../assets/logo.svg" alt="" width="30" height="24" class="d-inline-block align-text-top">
                 TestSystem
-            </a>
+          </router-link>
         </div>
     </nav>
 </template>
