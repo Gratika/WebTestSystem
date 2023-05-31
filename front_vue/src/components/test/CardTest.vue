@@ -6,14 +6,17 @@
             </div>
             <div class="card-body">
                 <p class="card-text">{{ test.body }}</p>
-                <button class="btn">Розпочати</button>
+                <MyButton>Розпочати</MyButton>
             </div>
         </div>
     </div>
 
 </template>
 <script>
+import MyButton from "@/components/UI/MyButton.vue";
+
 export default {
+    components: {MyButton},
     props:{
         test: {}
 
@@ -48,8 +51,5 @@ export default {
  .card-text{
      width: 100%;
  }
- .btn{
-     background: var(--background-2);
-     justify-items: end;
- }
+
 </style>

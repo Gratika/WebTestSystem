@@ -1,6 +1,6 @@
 <script setup>
-import TestList from "@/components/TestList.vue";
-import CategoryList from "@/components/testCategory/CategoryList.vue";
+import TestList from "@/components/test/TestList.vue";
+import CategoryList from "@/components/menu/CategoryList.vue";
 import {useMenuStore} from "@/stores/menu";
 import {onMounted} from "vue";
 
@@ -49,7 +49,7 @@ onMounted(()=>{
     border-radius: 20px;
     grid-column-start: 1;
     grid-column-end: 2;
-    padding: 2rem;
+    padding: 10px;
 }
 .my_content{
     display: grid;

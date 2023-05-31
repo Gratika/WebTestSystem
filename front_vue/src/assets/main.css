@@ -11,12 +11,11 @@
 .main_content{
     grid-column-start: 2;
     grid-column-end: 3;
-    padding: 20px 0;
+    padding:  1rem;
 }
 .my_header {
     background: var(--background-1);
     color: var(--color-text-1);
-    font-size: 1.5rem;
     grid-column-start: 1;
     grid-column-end: 4;
     line-height: 1.5;

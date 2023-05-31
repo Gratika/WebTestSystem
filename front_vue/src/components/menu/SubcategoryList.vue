@@ -7,7 +7,7 @@
 
       />
     <div v-if="isCanModify">
-      <button class="btn">Додати</button>
+      <MyButton>+</MyButton>
     </div>
   </div>
 
@@ -15,10 +15,11 @@
 <script>
 
 import {defineComponent} from "vue";
-import SubcategoryItem from "@/components/testCategory/SubcategoryItem.vue";
+import SubcategoryItem from "@/components/menu/SubcategoryItem.vue";
+import MyButton from "@/components/UI/MyButton.vue";
 
 export default defineComponent({
-    components: {SubcategoryItem},
+    components: {MyButton, SubcategoryItem},
     props:{
         subcategories:[],
         isShow:Boolean,
@@ -27,7 +28,4 @@ export default defineComponent({
 })
 </script>
 <style scoped>
-.btn{
-  background: var(--background-2);
-}
 </style>

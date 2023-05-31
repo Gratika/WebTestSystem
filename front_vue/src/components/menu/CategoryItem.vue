@@ -1,8 +1,8 @@
 <template>
   <div>
-      <button class="btn" type="button" @click="subcategoryShow = !subcategoryShow">
+      <MyBtn @click="subcategoryShow = !subcategoryShow">
           {{category.name}}
-      </button>
+      </MyBtn>
       <SubcategoryList
       :subcategories="subcategories"
       :isShow="subcategoryShow"
@@ -10,10 +10,11 @@
   </div>
 </template>
 <script>
-import SubcategoryItem from "@/components/testCategory/SubcategoryItem.vue";
-import SubcategoryList from "@/components/testCategory/SubcategoryList.vue";
+import SubcategoryItem from "@/components/menu/SubcategoryItem.vue";
+import SubcategoryList from "@/components/menu/SubcategoryList.vue";
+import MyBtn from "@/components/UI/MyBtn.vue";
 export  default {
-    components: {SubcategoryList},
+    components: {MyBtn, SubcategoryList},
     props:{
         category:{},
         subcategories:[],
@@ -28,9 +29,4 @@ export  default {
 }
 </script>
 <style scoped>
-.btn{
-    text-align: start;
-    font-size: 1.1rem;
-    width: 100%;
-}
 </style>

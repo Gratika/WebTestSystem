@@ -1,6 +1,9 @@
 <script >
 
+import MyButton from "@/components/UI/MyButton.vue";
+
 export default {
+    components: {MyButton}
 }
 </script>
 
@@ -57,7 +60,7 @@ export default {
             </div>
         </div>
         <div class="main_button">
-            <router-link to="/public"><button class="btn">Спробувати</button></router-link>
+            <router-link to="/public"><MyButton>Спробувати</MyButton></router-link>
         </div>
     </div>
 </template>

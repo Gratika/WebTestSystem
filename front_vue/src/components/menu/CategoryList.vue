@@ -1,6 +1,7 @@
 <script setup>
 import {defineComponent} from "vue";
-import CategoryItem from "@/components/testCategory/CategoryItem.vue";
+import CategoryItem from "@/components/menu/CategoryItem.vue";
+import MyButton from "@/components/UI/MyButton.vue";
 const props = defineProps({
   categoryDtoList:{
     type:Object,
@@ -20,7 +21,7 @@ const props = defineProps({
 })*/
 </script>
 <template>
-  <div class="my-3 pe-3">
+  <div class="my-3">
       <CategoryItem
               v-for="category in categoryDtoList"
               v-bind:key="category.id"
@@ -28,13 +29,15 @@ const props = defineProps({
               :subcategories="category.subcategoryDtoList"
               :isCanModify="isCanModify"
       />
-    <div v-if="isCanModify">
-      <button class="btn">Додати</button>
+    <div class="left" v-if="isCanModify">
+      <MyButton>Додати</MyButton>
     </div>
   </div>
 </template>
 <style scoped>
-.btn{
-  background: var(--background-2);
-}
+ .left{
+     display: flex;
+     justify-content: flex-end;
+     padding: 20px 0;
+ }
 </style>
