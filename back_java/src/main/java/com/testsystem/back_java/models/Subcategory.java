@@ -13,11 +13,7 @@ import java.util.Set;
 @Table(name = "subcategories")
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
-public class Subcategory {
-   @Id
-   @GeneratedValue(strategy = GenerationType.IDENTITY)
-   @Column(name = "subcategory_id")
-   private Long id;
+public class Subcategory extends BaseEntity{
 
    @NonNull
    @Column(name = "subcategory_name",nullable = true)

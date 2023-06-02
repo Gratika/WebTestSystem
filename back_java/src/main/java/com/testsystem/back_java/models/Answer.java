@@ -11,12 +11,7 @@ import lombok.NonNull;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "answers")
-public class Answer {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "answer_id")
-    private Long id;
+public class Answer extends BaseEntity{
 
     @NonNull
     @Column(name = "answer_text",nullable = false)

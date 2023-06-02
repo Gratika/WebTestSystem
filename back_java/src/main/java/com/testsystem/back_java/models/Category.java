@@ -14,11 +14,7 @@ import java.util.Set;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "categories")
-public class Category {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "category_id")
-    private Long id;
+public class Category extends BaseEntity{
 
     @NonNull
     @Column(name = "category_name", nullable = false)

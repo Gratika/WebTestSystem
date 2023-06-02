@@ -10,11 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "user_roles")
-public class UserRole {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ur_id")
-    private Long id;
+public class UserRole extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

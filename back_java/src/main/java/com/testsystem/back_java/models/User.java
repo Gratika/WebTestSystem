@@ -1,5 +1,6 @@
 package com.testsystem.back_java.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,17 +9,14 @@ import lombok.NonNull;
 import org.springframework.lang.Nullable;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity @Data
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "users")
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "user_id")
-    private Long id;
+public class User extends BaseEntity{
 
     @NonNull
     @Column(name = "login", nullable = false,unique = true)
@@ -48,10 +46,14 @@ public class User {
     @Column(name = "birthday", nullable = true)
     private Date birthday;
 
-    @OneToMany(mappedBy = "user")
-    private Set<UserRole> RoleSet;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "user_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private List<Role> roles;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
-    private Set<Test> testSet;
+    private List<Test> testSet;
 
 }

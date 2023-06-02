@@ -13,12 +13,7 @@ import java.util.Set;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "question_types")
-public class QuestionType {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "type_id")
-    private Long id;
+public class QuestionType extends BaseEntity{
 
     @NonNull
     @Column(name = "question_name",nullable = false)

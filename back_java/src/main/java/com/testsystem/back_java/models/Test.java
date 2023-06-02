@@ -13,12 +13,7 @@ import java.util.Set;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "tests")
-public class Test {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "test_id")
-    private Long id;
+public class Test extends BaseEntity{
 
     @NonNull
     @Column(name = "test_name",nullable = false)
