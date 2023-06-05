@@ -17,6 +17,12 @@ import java.util.Set;
 @AllArgsConstructor
 @Table(name = "users")
 public class User extends BaseEntity{
+    public User(String login, String email, String password){
+        this.login = login;
+        this.email = email;
+        this.password = password;
+        this.isActive = true;
+    }
 
     @NonNull
     @Column(name = "login", nullable = false,unique = true)
@@ -31,7 +37,7 @@ public class User extends BaseEntity{
     private String email;
 
     @NonNull
-    @Column(name = "is_active", columnDefinition = "integer default 1")
+    @Column(name = "is_active", columnDefinition = "tinyint default 1")
     private Boolean isActive;
 
     @Nullable
@@ -46,6 +52,7 @@ public class User extends BaseEntity{
     @Column(name = "birthday", nullable = true)
     private Date birthday;
 
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_roles",
             joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
