@@ -13,8 +13,8 @@ public final class JwtUserFactory {
     public JwtUserFactory() {
     }
 
-    public static JwtUser create(User user) {
-        return new JwtUser(
+    public static UserDetailsImpl create(User user) {
+        return new UserDetailsImpl(
                 user.getId(),
                 user.getLogin(),
                 user.getPassword(),

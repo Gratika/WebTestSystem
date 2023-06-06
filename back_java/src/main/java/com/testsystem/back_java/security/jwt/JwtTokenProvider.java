@@ -1,6 +1,6 @@
 package com.testsystem.back_java.security.jwt;
 
-import com.testsystem.back_java.security.JwtUserDetailsService;
+import com.testsystem.back_java.security.UserDetailsServiceImpl;
 import io.jsonwebtoken.*;
 import jakarta.annotation.PostConstruct;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +17,8 @@ import io.jsonwebtoken.Claims;
 import java.util.*;
 import java.util.function.Function;
 
+//Вилучити
+
 @Component
 public class JwtTokenProvider {
 
@@ -25,9 +27,9 @@ public class JwtTokenProvider {
 
     @Value("${jwt.token.expired}")
     private long validityInMilliseconds;
-    private final JwtUserDetailsService userDetailsService;
+    private final UserDetailsServiceImpl userDetailsService;
 
-    public JwtTokenProvider(JwtUserDetailsService userDetailsService) {
+    public JwtTokenProvider(UserDetailsServiceImpl userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
