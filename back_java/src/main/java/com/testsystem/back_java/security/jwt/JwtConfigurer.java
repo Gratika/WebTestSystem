@@ -1,5 +1,6 @@
 package com.testsystem.back_java.security.jwt;
 
+import com.testsystem.back_java.security.JwtUserDetailsService;
 import org.springframework.security.config.annotation.SecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.DefaultSecurityFilterChain;
