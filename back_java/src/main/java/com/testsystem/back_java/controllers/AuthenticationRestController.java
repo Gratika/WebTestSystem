@@ -2,7 +2,6 @@ package com.testsystem.back_java.controllers;
 
 import com.testsystem.back_java.dto.AuthenticationRequestDto;
 import com.testsystem.back_java.models.User;
-import com.testsystem.back_java.security.jwt.JwtTokenProvider;
 import com.testsystem.back_java.security.jwt.JwtUtils;
 import com.testsystem.back_java.services.UserService;
 import org.springframework.http.ResponseEntity;

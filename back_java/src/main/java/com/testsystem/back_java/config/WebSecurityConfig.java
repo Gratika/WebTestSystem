@@ -1,7 +1,9 @@
 package com.testsystem.back_java.config;
 
 import com.testsystem.back_java.security.UserDetailsServiceImpl;
-import com.testsystem.back_java.security.jwt.*;
+import com.testsystem.back_java.security.jwt.AuthEntryPointJwt;
+import com.testsystem.back_java.security.jwt.AuthTokenFilter;
+import com.testsystem.back_java.security.jwt.JwtUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,23 +20,22 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableMethodSecurity
-public class SecurityConfig {
+public class WebSecurityConfig {
+    private final  UserDetailsServiceImpl userDetailsService;
 
-    private final UserDetailsServiceImpl userDetailsService;
+    private final AuthEntryPointJwt unauthorizedHandler;
     private final JwtUtils jwtUtils;
 
-    @
-    private final AuthEntryPointJwt unauthorizedHandler;
-
-    public SecurityConfig(UserDetailsServiceImpl userDetailsService, JwtUtils jwtUtils, AuthEntryPointJwt unauthorizedHandler) {
-        this.userDetailsService = userDetailsService;
+   @Autowired
+    public WebSecurityConfig(JwtUtils jwtUtils, AuthEntryPointJwt unauthorizedHandler, UserDetailsServiceImpl userDetailsService) {
         this.jwtUtils = jwtUtils;
         this.unauthorizedHandler = unauthorizedHandler;
+        this.userDetailsService = userDetailsService;
     }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
-        return new AuthTokenFilter(jwtUtils, userDetailsService);
+        return new AuthTokenFilter(jwtUtils,userDetailsService);
     }
 
     @Bean
@@ -53,18 +54,18 @@ public class SecurityConfig {
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.csrf().disable()
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth ->
-                        auth.requestMatchers("/api/auth/**").permitAll()
-                                .requestMatchers("/api/test/**").permitAll()
+                        auth.requestMatchers("/auth/**").permitAll()
+                                .requestMatchers("/public/**").permitAll()
                                 .anyRequest().authenticated()
                 );
 
@@ -74,43 +75,4 @@ public class SecurityConfig {
 
         return http.build();
     }
-
-    /*private final JwtTokenProvider jwtTokenProvider;
-    private static final String ADMIN_ENDPOINT = "/api/v1/admin/**";
-    private static final String LOGIN_ENDPOINT = "/api/v1/auth/login";
-    private final AuthenticationConfiguration authConfiguration;
-
-    public SecurityConfig(JwtTokenProvider jwtTokenProvider, AuthenticationConfiguration authConfiguration) {
-        this.jwtTokenProvider = jwtTokenProvider;
-        this.authConfiguration = authConfiguration;
-    }
-    @Bean
-    public AuthenticationManager authenticationManager() throws Exception {
-        return authConfiguration.getAuthenticationManager();
-    }
-
-
-   //@Autowired
-    //public SecurityConfig(JwtTokenProvider jwtTokenProvider) {
-    //    this.jwtTokenProvider = jwtTokenProvider;
-    //}
-
-
-    @Bean
-    public SecurityFilterChain filterChain (HttpSecurity http) throws Exception{
-        http
-                .httpBasic().disable()
-                .csrf().disable()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .authorizeHttpRequests((auth)->auth
-                        .requestMatchers("/auth/singup").permitAll()
-                        .requestMatchers("/auth/login").permitAll()
-                        .anyRequest().authenticated())
-                .apply(new JwtConfigurer(jwtTokenProvider));
-        return http.build();
-    }*/
-
-
-
 }
