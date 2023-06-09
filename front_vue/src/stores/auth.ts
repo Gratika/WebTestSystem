@@ -1,34 +1,34 @@
 import { defineStore } from 'pinia';
 
-import axios from "axios";
 import router from "@/router";
+import MyLocalStorage from "@/services/myLocalStorage";
+import type {ILoginInput, IUser} from "@/api/type";
+import {loginUserFn} from "@/api/authApi";
 
-const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
+export type AuthStoreState ={
+    authUser:IUser|null;
+    token:string;
+    isLogin:boolean;
+}
 
 export const useAuthStore = defineStore({
     id: 'auth',
     state: () => ({
         // initialize state from local storage to enable user to stay logged in
-        user: JSON.parse(localStorage.getItem('user')),
-        returnUrl: null
+        authUser: JSON.parse(MyLocalStorage.getItem('user')),
+        token: MyLocalStorage.getItem('token'),
+        isLogin:MyLocalStorage.getItem('isLogin')
     }),
     actions: {
-        async login(username, password) {
-            const user = await fetchWrapper.post(`${baseUrl}/auth`, { username, password });
-
-            // update pinia state
-            this.user = user;
-
-            // store user details and jwt in local storage to keep user logged in between page refreshes
-            localStorage.setItem('user', JSON.stringify(user));
-
-            // redirect to previous url or default to home page
-            router.push(this.returnUrl || '/');
-        },
-        logout() {
-            this.user = null;
-            localStorage.removeItem('user');
-            router.push('/login');
+        onLogin(user:ILoginInput){
+            loginUserFn(user).then(
+                res=>{
+                    this.token = res.access_token;
+                    this.isLogin =true;
+                    MyLocalStorage.setItem('token',this.token);
+                    MyLocalStorage.setItem('isLogin',this.isLogin);
+                }
+            )
         }
     }
 });

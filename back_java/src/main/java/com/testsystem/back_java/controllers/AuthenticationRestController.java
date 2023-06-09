@@ -1,6 +1,7 @@
 package com.testsystem.back_java.controllers;
 
-import com.testsystem.back_java.dto.AuthenticationRequestDto;
+import com.testsystem.back_java.dto.LoginRequestDto;
+import com.testsystem.back_java.dto.RegisterRequestDto;
 import com.testsystem.back_java.models.User;
 import com.testsystem.back_java.security.jwt.JwtUtils;
 import com.testsystem.back_java.services.UserService;
@@ -31,7 +32,7 @@ public class AuthenticationRestController {
         this.userService = userService;
     }
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public ResponseEntity<Map<Object, Object>> login(@RequestBody AuthenticationRequestDto requestDto){
+    public ResponseEntity<Map<Object, Object>> login(@RequestBody LoginRequestDto requestDto){
         try{
             String username = requestDto.getLogin();
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, requestDto.getPassword()));
@@ -54,15 +55,15 @@ public class AuthenticationRestController {
         }
     }
    @RequestMapping(value = "/singup", method = RequestMethod.POST)
-    public ResponseEntity<User> registerUser(@RequestBody AuthenticationRequestDto requestDto){
+    public ResponseEntity<String> registerUser(@RequestBody RegisterRequestDto requestDto){
         String username = requestDto.getLogin();
         User user = userService.findUserByLogin(username);
         if(user==null){
             throw new UsernameNotFoundException("User with username: "+username+" not found");
         }
         user = new User(requestDto.getLogin(), requestDto.getEmail(), requestDto.getPassword());
-        User registerUser = this.userService.register(user);
+        this.userService.register(user);
 
-        return ResponseEntity.ok(registerUser);
+        return ResponseEntity.ok("Реєстрація пройшла успішно");
     }
 }
