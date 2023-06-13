@@ -71,7 +71,7 @@ export const logoutUserFn = async () => {
 };
 
 //інформація про користувача(профіль)
-export const getMeFn = async () => {
+export const getUserFn = async () => {
     const response = await authApi.get<IUserResponse>('users/me');
     return response.data;
 };

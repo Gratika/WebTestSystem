@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
 
-import router from "@/router";
+
 import MyLocalStorage from "@/services/myLocalStorage";
 import type {ILoginInput, IUser} from "@/api/type";
-import {loginUserFn} from "@/api/authApi";
+import {getUserFn, loginUserFn, logoutUserFn} from "@/api/authApi";
 
 export type AuthStoreState ={
     authUser:IUser|null;
@@ -27,6 +27,26 @@ export const useAuthStore = defineStore({
                     this.isLogin =true;
                     MyLocalStorage.setItem('token',this.token);
                     MyLocalStorage.setItem('isLogin',this.isLogin);
+                }
+            )
+        },
+        onLogout(){
+            logoutUserFn().then(
+                res=>{
+                    console.log(res.message);
+                    this.token = '';
+                    this.isLogin =false;
+                    MyLocalStorage.setItem('token',this.token);
+                    MyLocalStorage.setItem('isLogin',this.isLogin);
+                }
+            )
+
+        },
+        getAuthUser(){
+            getUserFn().then(
+                res=>{
+                    this.authUser=res.data;
+                    MyLocalStorage.setItem('user',this.authUser.toString());
                 }
             )
         }
