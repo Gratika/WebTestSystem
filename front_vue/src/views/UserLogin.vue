@@ -3,9 +3,9 @@ import AuthForm from "@/components/AuthForm.vue";
 export default {
   components: {AuthForm},
   setup(){
-    const  isRegister=true;
+    const  isRegister=false;
     return {
-       isRegister
+      isRegister
     }
   },
 }

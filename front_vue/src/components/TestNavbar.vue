@@ -9,7 +9,7 @@ import MyBtn from "@/components/UI/MyBtn.vue";
                 TestSystem
           </router-link>
           <div class = "user_login">
-              <router-link to="/login">
+              <router-link to="/registration">
                  <MyBtn>Sing UP</MyBtn>
               </router-link>
               <router-link to="/login">

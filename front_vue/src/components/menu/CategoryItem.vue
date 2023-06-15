@@ -10,7 +10,6 @@
   </div>
 </template>
 <script>
-import SubcategoryItem from "@/components/menu/SubcategoryItem.vue";
 import SubcategoryList from "@/components/menu/SubcategoryList.vue";
 import MyBtn from "@/components/UI/MyBtn.vue";
 export  default {
