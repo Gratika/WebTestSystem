@@ -13,9 +13,15 @@ const BASE_URL = `${import.meta.env.VITE_API_URL}`;
 //базовий URL та withCredentials: true - для відправки файлів cookie разом з запитами
 const authApi = axios.create({
     baseURL: BASE_URL,
-    withCredentials: true,
+    headers: {'X-Requested-With': 'XMLHttpRequest',
+              'Access-Control-Allow-Credentials': true,
+              'Content-Type': 'application/json',
+              'Access-Control-Allow-Origin': '*'},
+    withCredentials: false,
 });
-authApi.defaults.headers.common['Content-Type'] = 'application/json';
+//authApi.defaults.headers.common['Content-Type'] = 'application/json';
+//authApi.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
+//authApi.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
 
 //використовуючи методи створеного екземпляру axios опишемо ряд функцій
 
@@ -46,7 +52,7 @@ authApi.interceptors.response.use(
 
 //створюємо(реєструємо нового користувача)
 export const signUpUserFn = async (user: ISignUpInput) => {
-    const response = await authApi.post<GenericResponse>('auth/register', user);
+    const response = await authApi.post<GenericResponse>('/auth/singup', user);
     return response.data;
 };
 

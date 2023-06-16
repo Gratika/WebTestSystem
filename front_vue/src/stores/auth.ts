@@ -2,8 +2,10 @@ import { defineStore } from 'pinia';
 
 
 import MyLocalStorage from "@/services/myLocalStorage";
-import type {ILoginInput, IUser} from "@/api/type";
-import {getUserFn, loginUserFn, logoutUserFn} from "@/api/authApi";
+import type {ILoginInput, IUser, ISignUpInput} from "@/api/type";
+import {getUserFn, loginUserFn, logoutUserFn, signUpUserFn} from "@/api/authApi";
+
+
 
 export type AuthStoreState ={
     authUser:IUser|null;
@@ -20,6 +22,14 @@ export const useAuthStore = defineStore({
         isLogin:MyLocalStorage.getItem('isLogin')
     }),
     actions: {
+        onRegistration(user:ISignUpInput){
+
+            signUpUserFn(user).then(
+                res=>{
+                    console.log(res);
+                }
+            )
+        },
         onLogin(user:ILoginInput){
             loginUserFn(user).then(
                 res=>{

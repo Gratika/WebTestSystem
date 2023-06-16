@@ -1,14 +1,42 @@
 <script lang="ts">
 
+
 import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
+import type {ILoginInput, ISignUpInput} from "@/api/type";
+import {useAuthStore} from "@/stores/auth";
+import {reactive} from "vue";
 export default {
   components: {MyButton, MyInput},
   props:{
     isRegister:Boolean,
   },
   setup(){
-
+    const userLogin = reactive(new class implements ILoginInput {
+        login: string;
+        password: string;
+    });
+    const userRegistration = reactive(new class implements ISignUpInput {
+        email: string;
+        login: string;
+        password: string;
+        passwordConfirm: string;
+    });
+    const authStore = useAuthStore();
+    function onLogin(){
+        userLogin.login = userRegistration.login;
+        userLogin.password = userRegistration.password;
+        authStore.onLogin(userLogin);
+    }
+    const onRegistration=()=>{
+        authStore.onRegistration(userRegistration);
+    };
+    return{
+        userLogin,
+        userRegistration,
+        onLogin,
+        onRegistration
+    }
   },
 
 }
@@ -20,18 +48,21 @@ export default {
   <div class="my_content">
     <div class="my_container">
         <div class="row mb-3">
-          <MyInput type="form-control" id="loginInput" placeholder="login"/>
+          <MyInput type="form-control" id="loginInput" placeholder="Login" v-bind="userRegistration.login" />
         </div>
 
         <div class="row mb-3" v-if="isRegister">
-          <MyInput type="email" id="emailInput" placeholder="name@example.com"/>
+          <MyInput type="email" id="emailInput" v-bind="userRegistration.email" placeholder="Name@example.com"/>
         </div>
         <div class="row mb-3">
-          <MyInput type="password" id="passwordInput" placeholder="password" />
+          <MyInput type="password" id="passwordInput" v-bind="userRegistration.password" placeholder="Password" />
+        </div>
+        <div class="row mb-3">
+            <MyInput type="password" id="passwordConfirm" v-bind="userRegistration.passwordConfirm" placeholder="Confirm password" />
         </div>
         <div class="btn_aria">
           <MyButton v-if="!isRegister" class="mx-1">Увійти</MyButton>
-          <MyButton v-else class="mx-1">Зареєструватися</MyButton>
+          <MyButton v-else class="mx-1" @click="onRegistration">Зареєструватися</MyButton>
         </div>
 
 
