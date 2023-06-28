@@ -2,6 +2,7 @@ package com.testsystem.back_java.controllers;
 
 import com.testsystem.back_java.dto.LoginRequestDto;
 import com.testsystem.back_java.dto.RegisterRequestDto;
+import com.testsystem.back_java.exception.UserAlreadyExists;
 import com.testsystem.back_java.models.User;
 import com.testsystem.back_java.security.jwt.JwtUtils;
 import com.testsystem.back_java.services.UserService;
@@ -51,15 +52,15 @@ public class AuthenticationRestController {
 
 
         }catch(AuthenticationException e){
-            throw new BadCredentialsException("Invalid username or password");
+            throw new BadCredentialsException("Неправильний логін або пароль користувача");
         }
     }
    @RequestMapping(value = "/singup", method = RequestMethod.POST)
     public ResponseEntity<String> registerUser(@RequestBody RegisterRequestDto requestDto){
         String username = requestDto.getLogin();
         User user = userService.findUserByLogin(username);
-        if(user==null){
-            throw new UsernameNotFoundException("User with username: "+username+" not found");
+        if(user!=null){
+            throw new UserAlreadyExists("Користувач: "+username+" вже зареєстрований в системі");
         }
         user = new User(requestDto.getLogin(), requestDto.getEmail(), requestDto.getPassword());
         this.userService.register(user);

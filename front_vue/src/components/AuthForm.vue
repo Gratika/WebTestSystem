@@ -16,12 +16,19 @@ export default {
         login: string;
         password: string;
     });
-    const userRegistration = reactive(new class implements ISignUpInput {
+      const userRegistration:ISignUpInput =  {
+          email: "",
+          login: "",
+          password: "",
+          passwordConfirm: "",
+      }
+
+   /* const userRegistration = reactive(new class implements ISignUpInput {
         email: string;
         login: string;
         password: string;
         passwordConfirm: string;
-    });
+    });*/
     const authStore = useAuthStore();
     function onLogin(){
         userLogin.login = userRegistration.login;
@@ -29,6 +36,8 @@ export default {
         authStore.onLogin(userLogin);
     }
     const onRegistration=()=>{
+        console.log("user_registration:");
+        console.log(userRegistration);
         authStore.onRegistration(userRegistration);
     };
     return{
@@ -48,17 +57,41 @@ export default {
   <div class="my_content">
     <div class="my_container">
         <div class="row mb-3">
-          <MyInput type="form-control" id="loginInput" placeholder="Login" v-bind="userRegistration.login" />
+          <MyInput
+                  type="form-control"
+                  id="loginInput"
+                  placeholder="Login"
+                  v-bind:value="userRegistration.login"
+                  @input="userRegistration.login=$event.target.value"
+          />
         </div>
 
         <div class="row mb-3" v-if="isRegister">
-          <MyInput type="email" id="emailInput" v-bind="userRegistration.email" placeholder="Name@example.com"/>
+          <MyInput
+                  type="email"
+                  id="emailInput"
+                  v-bind:value="userRegistration.email"
+                  @input="userRegistration.email=$event.target.value"
+                  placeholder="Name@example.com"
+          />
         </div>
         <div class="row mb-3">
-          <MyInput type="password" id="passwordInput" v-bind="userRegistration.password" placeholder="Password" />
+          <MyInput
+                  type="password"
+                  id="passwordInput"
+                  v-bind:value="userRegistration.password"
+                  @input="userRegistration.password=$event.target.value"
+                  placeholder="Password"
+          />
         </div>
         <div class="row mb-3">
-            <MyInput type="password" id="passwordConfirm" v-bind="userRegistration.passwordConfirm" placeholder="Confirm password" />
+            <MyInput
+                    type="password"
+                    id="passwordConfirm"
+                    v-bind:value="userRegistration.passwordConfirm"
+                    @input="userRegistration.passwordConfirm=$event.target.value"
+                    placeholder="Confirm password"
+            />
         </div>
         <div class="btn_aria">
           <MyButton v-if="!isRegister" class="mx-1">Увійти</MyButton>

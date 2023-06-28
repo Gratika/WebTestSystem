@@ -39,25 +39,28 @@ authApi.interceptors.response.use(
     },
     //якщо сервер відповів помилкою
     async (error) => {
-        const originalRequest = error.config;
+        console.log(error);
+        /*const originalRequest = error.config;
         const errMessage = error.response.data.message as string;
         if (errMessage.includes('not logged in') && !originalRequest._retry) { //яка містить 'not logged in'
             originalRequest._retry = true;
             await refreshAccessTokenFn(); //викликаємо функцію оновлення токена
             return authApi(originalRequest);
-        }
+        }*/
         return Promise.reject(error);
     }
 );
 
 //створюємо(реєструємо нового користувача)
 export const signUpUserFn = async (user: ISignUpInput) => {
+    console.log("function_signUp");//delete
     const response = await authApi.post<GenericResponse>('/auth/singup', user);
     return response.data;
 };
 
 //авторизація, вхід в систему
 export const loginUserFn = async (user: ILoginInput) => {
+    console.log(user);
     const response = await authApi.post<ILoginResponse>('auth/login', user);
     return response.data;
 };

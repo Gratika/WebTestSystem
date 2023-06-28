@@ -2,6 +2,8 @@ package com.testsystem.back_java.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -15,11 +17,13 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @CreatedDate
+    @CreationTimestamp
+    //@CreatedDate
     @Column(name = "created")
     private Date created;
 
-    @LastModifiedDate
+    @UpdateTimestamp
+    //@LastModifiedDate
     @Column(name = "updated")
     private Date updated;
 }

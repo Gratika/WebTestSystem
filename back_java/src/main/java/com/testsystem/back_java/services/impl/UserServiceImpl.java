@@ -2,10 +2,8 @@ package com.testsystem.back_java.services.impl;
 
 import com.testsystem.back_java.models.Role;
 import com.testsystem.back_java.models.User;
-import com.testsystem.back_java.models.UserRole;
 import com.testsystem.back_java.repo.RoleRepository;
 import com.testsystem.back_java.repo.UserRepository;
-import com.testsystem.back_java.repo.UserRoleRepository;
 import com.testsystem.back_java.services.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,9 +67,9 @@ public class UserServiceImpl implements UserService {
         User findUser = this.userRepository.findUserByLogin(login);
         if (findUser==null)
         {
-            log.info("In findUserById - user not found by login {}", login);
+            log.info("In findUserByLogin - user not found by login {}", login);
         }else{
-            log.info("In findUserById - user {} found by login {}", findUser,login);
+            log.info("In findUserByLogin - user {} found by login {}", findUser,login);
         }
         return findUser;
     }

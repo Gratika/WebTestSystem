@@ -1,5 +1,8 @@
-package com.testsystem.back_java.models;
+package deleted;
 
+import com.testsystem.back_java.models.BaseEntity;
+import com.testsystem.back_java.models.Role;
+import com.testsystem.back_java.models.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -10,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(force = true)
 @AllArgsConstructor
 @Table(name = "user_roles")
-public class UserRole extends BaseEntity{
+public class UserRole extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)

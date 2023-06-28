@@ -1,7 +1,5 @@
-package com.testsystem.back_java.services.impl;
+package deleted;
 
-import com.testsystem.back_java.models.UserRole;
-import com.testsystem.back_java.repo.UserRoleRepository;
 import com.testsystem.back_java.services.UserRoleService;
 import org.springframework.stereotype.Service;
 

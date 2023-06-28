@@ -26,6 +26,7 @@ export const useAuthStore = defineStore({
 
             signUpUserFn(user).then(
                 res=>{
+                    console.log("result function SinglUp:")//delete
                     console.log(res);
                 }
             )
