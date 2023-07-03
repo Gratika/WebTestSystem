@@ -16,8 +16,8 @@ const authApi = axios.create({
     headers: {'X-Requested-With': 'XMLHttpRequest',
               'Access-Control-Allow-Credentials': true,
               'Content-Type': 'application/json',
-              'Access-Control-Allow-Origin': '*'},
-    withCredentials: false,
+              'Access-Control-Allow-Origin': "*"},
+    withCredentials: true,
 });
 //authApi.defaults.headers.common['Content-Type'] = 'application/json';
 //authApi.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';

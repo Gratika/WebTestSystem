@@ -5,32 +5,63 @@ import MyButton from "@/components/UI/MyButton.vue";
 import MyInput from "@/components/UI/MyInput.vue";
 import type {ILoginInput, ISignUpInput} from "@/api/type";
 import {useAuthStore} from "@/stores/auth";
-import {reactive} from "vue";
+import { Form, useField, useForm } from 'vee-validate';
+import { toTypedSchema  } from '@vee-validate/zod';
+import * as zod from 'zod';
+import { createToast } from 'mosha-vue-toastify';
+
 export default {
   components: {MyButton, MyInput},
   props:{
     isRegister:Boolean,
   },
   setup(){
-    const userLogin = reactive(new class implements ILoginInput {
-        login: string;
-        password: string;
-    });
-      const userRegistration:ISignUpInput =  {
-          email: "",
-          login: "",
-          password: "",
-          passwordConfirm: "",
-      }
+    const userLogin:ILoginInput =  {
+        login:"",
+        password: ""
+    };
+    const userRegistration:ISignUpInput =  {
+        email: "",
+        login: "",
+        password: "",
+        //passwordConfirm: "",
+    }
+    const passwordConfirm:String="";
 
-   /* const userRegistration = reactive(new class implements ISignUpInput {
-        email: string;
-        login: string;
-        password: string;
-        passwordConfirm: string;
-    });*/
+
     const authStore = useAuthStore();
-    function onLogin(){
+    /*валідація форм*/
+      const loginSchema = toTypedSchema (
+          zod.object({
+              login:zod
+                  .string()
+                  .min(1,'Login is required'),
+              email: zod
+                  .string()
+                  .min(1, 'Email address is required')
+                  .email('Email Address is invalid'),
+              password: zod
+                  .string()
+                  .min(1, 'Password is required')
+                  .min(8, 'Password must be more than 8 characters')
+                  .max(32, 'Password must be less than 32 characters'),
+              passwordConfirm: zod.string().min(1, 'Please confirm your password'),
+          })
+              .refine((data) => data.password === data.passwordConfirm, {
+                  path: ['passwordConfirm'],
+                  message: 'Passwords do not match',
+              })
+
+      );
+      const { handleSubmit, errors, resetForm } = useForm({
+          validationSchema: loginSchema,
+      });
+      const { value: login } = useField('name');
+      const { value: email } = useField('email');
+      const { value: password } = useField('password');
+      const { value: passwordConfirm } = useField('passwordConfirm');
+
+      function onLogin(){
         userLogin.login = userRegistration.login;
         userLogin.password = userRegistration.password;
         authStore.onLogin(userLogin);
@@ -44,7 +75,8 @@ export default {
         userLogin,
         userRegistration,
         onLogin,
-        onRegistration
+        onRegistration,
+        passwordConfirm
     }
   },
 
@@ -59,6 +91,7 @@ export default {
         <div class="row mb-3">
           <MyInput
                   type="form-control"
+                  name="login"
                   id="loginInput"
                   placeholder="Login"
                   v-bind:value="userRegistration.login"
@@ -88,8 +121,8 @@ export default {
             <MyInput
                     type="password"
                     id="passwordConfirm"
-                    v-bind:value="userRegistration.passwordConfirm"
-                    @input="userRegistration.passwordConfirm=$event.target.value"
+                    name = "passwordConfirm"
+                    v-bind:value="passwordConfirm"
                     placeholder="Confirm password"
             />
         </div>

@@ -26,7 +26,7 @@ export interface ISignUpInput {
    login: string;
    email: string;
    password: string;
-   passwordConfirm: string;
+   //passwordConfirm: string;
 }
 
 export interface ILoginResponse {
