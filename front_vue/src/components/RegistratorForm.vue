@@ -4,13 +4,13 @@
 import MyButton from "@/components/UI/MyButton.vue";
 import type {ISignUpInput} from "@/api/type";
 import {useAuthStore} from "@/stores/auth";
-import { ErrorMessage,Field, useForm } from 'vee-validate';
+import { ErrorMessage,Field,Form, useForm } from 'vee-validate';
 import { toTypedSchema  } from '@vee-validate/zod';
 import * as zod from 'zod';
 import { createToast } from 'mosha-vue-toastify';
 
 export default {
-  components: {MyButton, Field, ErrorMessage},
+  components: {MyButton, Field, ErrorMessage,Form},
   setup(){
 
     const userRegistration:ISignUpInput =  {
