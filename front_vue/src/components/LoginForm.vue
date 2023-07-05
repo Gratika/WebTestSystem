@@ -12,9 +12,6 @@ import { createToast } from 'mosha-vue-toastify';
 
 export default {
   components: {MyButton, MyInput},
-  props:{
-    isRegister:Boolean,
-  },
   setup(){
     const userLogin:ILoginInput =  {
         login:"",
@@ -26,9 +23,6 @@ export default {
         password: "",
         //passwordConfirm: "",
     }
-    const passwordConfirm:String="";
-
-
     const authStore = useAuthStore();
     /*валідація форм*/
       const loginSchema = toTypedSchema (
@@ -56,7 +50,7 @@ export default {
       const { handleSubmit, errors, resetForm } = useForm({
           validationSchema: loginSchema,
       });
-      const { value: login } = useField('name');
+      const { value: login } = useField('login');
       const { value: email } = useField('email');
       const { value: password } = useField('password');
       const { value: passwordConfirm } = useField('passwordConfirm');
@@ -90,16 +84,16 @@ export default {
     <div class="my_container">
         <div class="row mb-3">
           <MyInput
-                  type="form-control"
+                  type="text"
                   name="login"
-                  id="loginInput"
+                  id="login"
                   placeholder="Login"
-                  v-bind:value="userRegistration.login"
-                  @input="userRegistration.login=$event.target.value"
+                  v-model="login"
+
           />
         </div>
 
-        <div class="row mb-3" v-if="isRegister">
+        <div class="row mb-3">
           <MyInput
                   type="email"
                   id="emailInput"

@@ -1,18 +1,10 @@
-<script >
-import AuthForm from "@/components/AuthForm.vue";
-export default {
-  components: {AuthForm},
-  setup(){
-    const  isRegister=true;
-    return {
-       isRegister
-    }
-  },
-}
+<script setup >
+import RegistratorForm from "@/components/RegistratorForm.vue";
+
 
 </script>
 <template>
- <AuthForm :isRegister="isRegister"/>
+ <RegistratorForm/>
 </template>
 <style scoped>
 

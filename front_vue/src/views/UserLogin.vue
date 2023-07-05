@@ -1,5 +1,5 @@
 <script >
-import AuthForm from "@/components/AuthForm.vue";
+import AuthForm from "@/components/RegistratorForm.vue";
 export default {
   components: {AuthForm},
   setup(){
