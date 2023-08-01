@@ -16,11 +16,11 @@ import java.util.Set;
 public class QuestionType extends BaseEntity{
 
     @NonNull
-    @Column(name = "question_name",nullable = false)
+    @Column(name = "type_name",nullable = false)
     private String name;
 
 
-    @Column(name = "question_note")
+    @Column(name = "type_note")
     private String note;
 
     @OneToMany(mappedBy = "questionType")

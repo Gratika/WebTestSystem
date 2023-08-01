@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -30,6 +30,6 @@ public class Question extends BaseEntity{
     private Test test;
 
     @OneToMany(mappedBy = "question")
-    Set<Answer> answerSet;
+    List<Answer> answerSet;
 
 }

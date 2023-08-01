@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,5 +36,5 @@ public class Test extends BaseEntity{
     private Subcategory subcategory;
 
     @OneToMany(mappedBy = "test")
-    Set<Question> questionSet;
+    List<Question> questionSet;
 }

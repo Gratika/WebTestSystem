@@ -65,9 +65,28 @@ export interface ITest{
    description: String ;
    owner:IOwner|null;
    subcategoryId:bigint|null;
+   questionDtoList:Array<IQuestion>|null;
 }
 export interface IOwner{
    id:number|null;
    login:string;
    email:string;
+}
+export interface IQuestionType{
+   id:bigint|null;
+   name:string;
+   note:string;
+}
+export interface IAnswer{
+   id:bigint|null;
+   text:string;
+   isRight:Boolean;
+   questionId:bigint;
+}
+export interface IQuestion{
+   id:bigint|null;
+   text:string;
+   questionTypeDto:IQuestionType;
+   testId:bigint;
+   answerSetDto:Array<IAnswer>|null;
 }

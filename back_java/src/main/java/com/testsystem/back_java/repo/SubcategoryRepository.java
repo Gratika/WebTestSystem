@@ -9,8 +9,5 @@ import java.util.List;
 
 public interface SubcategoryRepository extends CrudRepository<Subcategory, Long> {
 
-    @Query(
-            nativeQuery = true,
-            value = "select s.* from subcategories s")
-    List<SubcategoryDto> findAllSubcategoryDto();
+
 }
