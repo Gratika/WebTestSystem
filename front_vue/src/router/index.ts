@@ -1,9 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
+// @ts-ignore
 import ListTestView from "@/views/ListTestView.vue";
+// @ts-ignore
 import HomeView from "@/views/HomeView.vue";
+// @ts-ignore
 import UserRegistration from "@/views/UserRegistration.vue";
+// @ts-ignore
 import UserLogin from "@/views/UserLogin.vue";
-//import HomeView from '../views/HomeView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -14,8 +17,8 @@ const router = createRouter({
       component: HomeView
     },
     {
-      path: '/public',
-      name: 'public',
+      path: '/testList',
+      name: 'testList',
       component: ListTestView
     },
     {
@@ -27,9 +30,8 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: UserLogin
-    },
-
+    }
   ]
-})
+});
 
-export default router
+export default router;

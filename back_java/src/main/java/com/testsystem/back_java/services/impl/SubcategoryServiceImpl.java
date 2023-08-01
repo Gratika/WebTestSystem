@@ -1,9 +1,9 @@
-package com.testsystem.back_java.services;
+package com.testsystem.back_java.services.impl;
 
 import com.testsystem.back_java.dto.SubcategoryDto;
-import com.testsystem.back_java.models.Category;
 import com.testsystem.back_java.models.Subcategory;
 import com.testsystem.back_java.repo.SubcategoryRepository;
+import com.testsystem.back_java.services.ISubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,12 +13,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class SubcategoryService {
+public class SubcategoryServiceImpl implements ISubcategoryService {
 
     private final SubcategoryRepository subcategoryRepository;
 
     @Autowired
-    public SubcategoryService(SubcategoryRepository subcategoryRepository) {
+    public SubcategoryServiceImpl(SubcategoryRepository subcategoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
     }
 
@@ -32,8 +32,17 @@ public class SubcategoryService {
         if(optionalSubcategory.isPresent()) {return optionalSubcategory.get();}
         return null;
     }
-    public void saveSubcategory(Subcategory subcategory){
-        subcategoryRepository.save(subcategory);
+    public Subcategory saveSubcategory(Subcategory subcategory){
+        Subcategory saveSubcategory =subcategoryRepository.save(subcategory);
+        return saveSubcategory;
+    }
+
+    @Override
+    public Subcategory convertSubcategoryToEntity(SubcategoryDto subcategoryDto) {
+        Subcategory subcategory = new Subcategory();
+        subcategory.setName(subcategoryDto.getName());
+        return subcategory;
+
     }
 
     public void updateSubcategory(Subcategory subcategory){
@@ -51,7 +60,7 @@ public class SubcategoryService {
                 .collect(Collectors.toList());
     }
 
-    private SubcategoryDto convertEntityToDto(Subcategory subcategory){
+    public SubcategoryDto convertEntityToDto(Subcategory subcategory){
         SubcategoryDto subcategoryDto = new SubcategoryDto();
         subcategoryDto.setId(subcategory.getId());
         subcategoryDto.setName(subcategory.getName());

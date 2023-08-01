@@ -1,8 +1,7 @@
-package com.testsystem.back_java.services;
+package deleted;
 
 import deleted.UserRole;
 
 public interface UserRoleService {
-    //можливо краще вилучити
     void save(UserRole userRole);
 }

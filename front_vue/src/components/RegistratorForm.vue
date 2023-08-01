@@ -7,10 +7,10 @@ import {useAuthStore} from "@/stores/auth";
 import { ErrorMessage,Field,Form, useForm } from 'vee-validate';
 import { toTypedSchema  } from '@vee-validate/zod';
 import * as zod from 'zod';
-import { createToast } from 'mosha-vue-toastify';
 
 export default {
   components: {MyButton, Field, ErrorMessage,Form},
+  emits: ['click'], // Объявляем событие "click"
   setup(){
 
     const userRegistration:ISignUpInput =  {
@@ -49,10 +49,10 @@ export default {
 
 
     const onRegistration=()=>{
-        console.log("user_registration:");
-        console.log(userRegistration);
-        authStore.onRegistration(userRegistration);
+      authStore.onRegistration(userRegistration);
+
     };
+
     return{
         userRegistration,
         onRegistration,
@@ -69,50 +69,58 @@ export default {
   <div class="my_content">
     <div class="my_container">
         <Form :validation-schema="registerSchema">
-            <div class="row mb-3">
+            <div class="row mb-3 mx-0">
+              <label for="login" class="mb-1">Логін:</label>
                 <Field
                         type="form-control"
                         name="login"
                         id="login"
                         class="my_input"
+                        autocomplete="username"
                         v-bind:value="userRegistration.login"
                         @input="userRegistration.login=$event.target.value"
                 />
-                <ErrorMessage name="login" />
+                <ErrorMessage name="login" class="text-danger"/>
             </div>
 
-            <div class="row mb-3">
+            <div class="row mb-3 mx-0">
+              <label for="email" class="mb-1">Email:</label>
                 <Field
                         type="email"
                         name="email"
                         id="email"
                         class="my_input"
+                        autocomplete="email"
                         v-bind:value="userRegistration.email"
                         @input="userRegistration.email=$event.target.value"
                 />
-                <ErrorMessage name="email" />
+                <ErrorMessage name="email" class="text-danger"/>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3 mx-0">
+              <label for="password" class="mb-1">Пароль:</label>
                 <Field
                         type="password"
                         name="password"
                         id="password"
                         class="my_input"
+                        autocomplete="off"
                         v-bind:value="userRegistration.password"
                         @input="userRegistration.password=$event.target.value"
                 />
-                <ErrorMessage name="password" />
+                <ErrorMessage name="password" class="text-danger"/>
             </div>
-            <div class="row mb-3">
+            <div class="row mb-3 mx-0">
+              <label for="passwordConfirm" class="mb-1">Повторіть пароль:</label>
                 <Field
                         type="password"
                         id="passwordConfirm"
                         name = "passwordConfirm"
                         class="my_input"
+                        autocomplete="off"
                         v-bind:value="userRegistration.passwordConfirm"
                         @input="userRegistration.passwordConfirm=$event.target.value"
                 />
-                <ErrorMessage name="passwordConfirm" />
+                <ErrorMessage name="passwordConfirm" class="text-danger"/>
             </div>
             <div class="btn_aria">
                 <MyButton class="mx-1" @click="onRegistration">Зареєструватися</MyButton>
@@ -129,10 +137,7 @@ export default {
   justify-content: space-around;
   margin: 1rem 0;
 }
-.form-label{
-  margin: 0;
-  padding: 10px;
-}
+
 .my_content{
   align-items: center;
   background:white ;

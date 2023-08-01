@@ -1,7 +1,11 @@
-<script setup>
+<script setup lang='ts'>
+const emits = defineEmits(['click']);
+const handleClick = () => {
+  emits('click'); // Испускаем событие 'click'
+};
 </script>
 <template>
-  <button>
+  <button type='button'  @click="handleClick">
       <slot></slot>
   </button>
 </template>

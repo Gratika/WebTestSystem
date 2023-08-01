@@ -6,6 +6,8 @@ import type {
     ISignUpInput,
     IUserResponse,
 } from './type';
+import { AxiosError } from 'axios'
+import { createToast } from 'mosha-vue-toastify'
 
 const BASE_URL = `${import.meta.env.VITE_API_URL}`;
 
@@ -19,9 +21,7 @@ const authApi = axios.create({
               'Access-Control-Allow-Origin': "*"},
     withCredentials: true,
 });
-//authApi.defaults.headers.common['Content-Type'] = 'application/json';
-//authApi.defaults.headers.common['Access-Control-Allow-Credentials'] = 'true';
-//authApi.defaults.headers.common['Access-Control-Allow-Origin'] = '*';
+
 
 //використовуючи методи створеного екземпляру axios опишемо ряд функцій
 
@@ -32,7 +32,23 @@ export const refreshAccessTokenFn = async () => {
 };
 //перехоплювач (interceptors) відповідей чи запитів axios (до того як вони будуть опрацьована then або catch)
 //автоматично виконується до запитів та після отримання відповіді
-authApi.interceptors.response.use(
+authApi.interceptors.request.use(
+  (config) => {
+      // Проверяем, есть ли токен в localStorage
+      const token = localStorage.getItem('token');
+      console.log("token:");
+      console.log(token);
+      if (token) {
+          // Если есть, добавляем его в заголовок Authorization
+          config.headers['Authorization'] = `Bearer ${token}`;
+      }
+      return config;
+  },
+  (error) => {
+      return Promise.reject(error);
+  }
+);
+/*authApi.interceptors.response.use(
     //якщо отримали відповідь, то повертаємо її
     (response) => {
         return response;
@@ -40,20 +56,24 @@ authApi.interceptors.response.use(
     //якщо сервер відповів помилкою
     async (error) => {
         console.log(error);
-        /*const originalRequest = error.config;
-        const errMessage = error.response.data.message as string;
+        const originalRequest = error.config;
+        let errMessage = ''
+        if (error.response?.data) {
+          errMessage = error.response.data as string
+        }else{
+          errMessage = error.message;
+        }
         if (errMessage.includes('not logged in') && !originalRequest._retry) { //яка містить 'not logged in'
             originalRequest._retry = true;
             await refreshAccessTokenFn(); //викликаємо функцію оновлення токена
             return authApi(originalRequest);
-        }*/
+        }
         return Promise.reject(error);
     }
-);
+);*/
 
 //створюємо(реєструємо нового користувача)
 export const signUpUserFn = async (user: ISignUpInput) => {
-    console.log("function_signUp");//delete
     const response = await authApi.post<GenericResponse>('/auth/singup', user);
     return response.data;
 };
@@ -81,6 +101,38 @@ export const logoutUserFn = async () => {
 
 //інформація про користувача(профіль)
 export const getUserFn = async () => {
-    const response = await authApi.get<IUserResponse>('users/me');
+    const response = await authApi.get<IUserResponse>('auth/currentUser');
     return response.data;
 };
+// Универсальная функция для отправки запроса
+export const sendRequest = async <T>( method: string,  url: string,  data?: any): Promise<T> => {
+
+    const response = await authApi.request<T>({
+      method,
+      url,
+      data,
+    });
+    return response.data;
+
+};
+export const showErrorMessage = function( error : AxiosError){
+  if (error && error.response && error.response.data && error.response.data.message) {
+    createToast(error.response.data.message, {
+      position: 'top-right',
+      type: 'danger',
+    });
+  } else {
+    if(error && error.message){
+      createToast(error.message, {
+        position: 'top-right',
+        type: 'danger',
+      });
+    }else {
+      console.log('Unknown error:', error)
+      createToast('Произошла ошибка', {
+        position: 'top-right',
+        type: 'danger'
+      });
+    }
+  }
+}

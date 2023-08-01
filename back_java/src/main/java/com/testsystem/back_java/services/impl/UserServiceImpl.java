@@ -1,10 +1,12 @@
 package com.testsystem.back_java.services.impl;
 
+import com.testsystem.back_java.dto.UserDto;
+import com.testsystem.back_java.exception.UserNotFoundException;
 import com.testsystem.back_java.models.Role;
 import com.testsystem.back_java.models.User;
 import com.testsystem.back_java.repo.RoleRepository;
 import com.testsystem.back_java.repo.UserRepository;
-import com.testsystem.back_java.services.UserService;
+import com.testsystem.back_java.services.IUserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
@@ -30,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User register(User user) {
-        Role newRole = roleRepository.findRoleByAbbr("User_Role");
+        Role newRole = roleRepository.findRoleByName("User_Role");
         List<Role> roles = new ArrayList<>();
         roles.add(newRole);
         user.setPassword(passwordEncoder.encode(user.getPassword()));//шифруємо пароль
@@ -85,5 +87,26 @@ public class UserServiceImpl implements UserService {
         this.userRepository.deleteById(id);
         log.info("In deleteById - User with id {} successfully delete", id);
 
+    }
+
+    @Override
+    public void addRole(long userId, String roleName) {
+        User findUser = findUserById(userId);
+        if (findUser==null) throw new UserNotFoundException();
+        Role newRole = roleRepository.findRoleByName(roleName);
+        List<Role> roles = findUser.getRoles();
+        roles.add(newRole);
+        userRepository.addRolesToUser(userId, roles);
+        log.info("In addRole - user: {} add new role {}", findUser,newRole);
+    }
+
+    public UserDto findUserDtoByLogin(String login){
+       User user =this.findUserByLogin(login);
+        UserDto userDto = this.convertEntityInUserDto(user);
+        return userDto;
+    }
+    private UserDto convertEntityInUserDto(User user){
+        UserDto userDto =new UserDto(user);
+        return userDto;
     }
 }

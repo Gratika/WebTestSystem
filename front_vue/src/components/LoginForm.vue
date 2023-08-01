@@ -1,76 +1,50 @@
 <script lang="ts">
 
 
-import MyButton from "@/components/UI/MyButton.vue";
-import MyInput from "@/components/UI/MyInput.vue";
-import type {ILoginInput, ISignUpInput} from "@/api/type";
-import {useAuthStore} from "@/stores/auth";
-import { Form, useField, useForm } from 'vee-validate';
+import MyButton from '@/components/UI/MyButton.vue';
+import type {ILoginInput} from '@/api/type';
+import {useAuthStore} from '@/stores/auth';
+import { ErrorMessage,Field,Form, useForm } from 'vee-validate';
 import { toTypedSchema  } from '@vee-validate/zod';
 import * as zod from 'zod';
-import { createToast } from 'mosha-vue-toastify';
 
 export default {
-  components: {MyButton, MyInput},
+  components: {MyButton, Field, ErrorMessage,Form},
   setup(){
+
     const userLogin:ILoginInput =  {
-        login:"",
-        password: ""
+        login:'',
+        password: ''
     };
-    const userRegistration:ISignUpInput =  {
-        email: "",
-        login: "",
-        password: "",
-        //passwordConfirm: "",
-    }
     const authStore = useAuthStore();
     /*валідація форм*/
       const loginSchema = toTypedSchema (
-          zod.object({
-              login:zod
-                  .string()
-                  .min(1,'Login is required'),
-              email: zod
-                  .string()
-                  .min(1, 'Email address is required')
-                  .email('Email Address is invalid'),
-              password: zod
-                  .string()
-                  .min(1, 'Password is required')
-                  .min(8, 'Password must be more than 8 characters')
-                  .max(32, 'Password must be less than 32 characters'),
-              passwordConfirm: zod.string().min(1, 'Please confirm your password'),
-          })
-              .refine((data) => data.password === data.passwordConfirm, {
-                  path: ['passwordConfirm'],
-                  message: 'Passwords do not match',
-              })
+        zod.object({
+          login:zod
+            .string()
+            .nonempty('Поле login обов\'язкове'),
+          password: zod
+            .string()
+            .nonempty('Поле password обов\'язкове')
+            .min(8, 'Password must be more than 8 characters')
+            .max(32, 'Password must be less than 32 characters'),
+        })
 
       );
       const { handleSubmit, errors, resetForm } = useForm({
           validationSchema: loginSchema,
       });
-      const { value: login } = useField('login');
-      const { value: email } = useField('email');
-      const { value: password } = useField('password');
-      const { value: passwordConfirm } = useField('passwordConfirm');
+
 
       function onLogin(){
-        userLogin.login = userRegistration.login;
-        userLogin.password = userRegistration.password;
+        console.log("onLogin");
         authStore.onLogin(userLogin);
     }
-    const onRegistration=()=>{
-        console.log("user_registration:");
-        console.log(userRegistration);
-        authStore.onRegistration(userRegistration);
-    };
+
     return{
         userLogin,
-        userRegistration,
         onLogin,
-        onRegistration,
-        passwordConfirm
+        loginSchema
     }
   },
 
@@ -82,52 +56,38 @@ export default {
 <template>
   <div class="my_content">
     <div class="my_container">
-        <div class="row mb-3">
-          <MyInput
-                  type="text"
-                  name="login"
-                  id="login"
-                  placeholder="Login"
-                  v-model="login"
+      <Form :validation-schema="loginSchema">
+        <div class="row mb-3 mx-0">
+          <label for="login" class="mb-1">Логін:</label>
+          <Field
+            type="form-control"
+            name="login"
+            id="login"
+            class="my_input"
+            v-bind:value="userLogin.login"
+            @input="userLogin.login=$event.target.value"
+          />
+          <ErrorMessage name="login" class="text-danger"/>
+        </div>
 
+        <div class="row mb-3 mx-0">
+          <label for="password" class="mb-1">Пароль:</label>
+          <Field
+            type="password"
+            name="password"
+            id="password"
+            class="my_input"
+            v-bind:value="userLogin.password"
+            @input="userLogin.password=$event.target.value"
           />
+          <ErrorMessage name="password" class="text-danger"/>
         </div>
 
-        <div class="row mb-3">
-          <MyInput
-                  type="email"
-                  id="emailInput"
-                  v-bind:value="userRegistration.email"
-                  @input="userRegistration.email=$event.target.value"
-                  placeholder="Name@example.com"
-          />
-        </div>
-        <div class="row mb-3">
-          <MyInput
-                  type="password"
-                  id="passwordInput"
-                  v-bind:value="userRegistration.password"
-                  @input="userRegistration.password=$event.target.value"
-                  placeholder="Password"
-          />
-        </div>
-        <div class="row mb-3">
-            <MyInput
-                    type="password"
-                    id="passwordConfirm"
-                    name = "passwordConfirm"
-                    v-bind:value="passwordConfirm"
-                    placeholder="Confirm password"
-            />
-        </div>
         <div class="btn_aria">
-          <MyButton v-if="!isRegister" class="mx-1">Увійти</MyButton>
-          <MyButton v-else class="mx-1" @click="onRegistration">Зареєструватися</MyButton>
+          <MyButton class="mx-1" @click="onLogin">Увійти</MyButton>
         </div>
-
-
+      </Form>
     </div>
-
   </div>
 </template>
 
@@ -138,10 +98,7 @@ export default {
   justify-content: space-around;
   margin: 1rem 0;
 }
-.form-label{
-  margin: 0;
-  padding: 10px;
-}
+
 .my_content{
   align-items: center;
   background:white ;
@@ -165,5 +122,10 @@ export default {
   justify-content: space-around;
   padding: 20px;
 
+}
+.my_input{
+  border: solid 1px var(--background-2);
+  border-radius: 20px;
+  padding: 10px;
 }
 </style>

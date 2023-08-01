@@ -1,5 +1,7 @@
 package com.testsystem.back_java.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import deleted.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +17,16 @@ import java.util.List;
 public class Role extends BaseEntity{
 
     @NonNull
-    @Column(name = "abbr", nullable = false, unique = true)
-    private String abbr;
+    @Column(name = "note", nullable = false, unique = true)
+    private String note;
 
     @Column(name = "name")
     private String name;
 
+    /*@OneToMany(mappedBy = "role")
+    private List<UserRole> users;*/
+
+    @JsonIgnore
     @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     private List<User> users;
 
@@ -28,7 +34,7 @@ public class Role extends BaseEntity{
     public String toString() {
         return "Role{" +
                 "id: " + super.getId() + ", " +
-                "name: " + name +
-                "abbr" + abbr + "}";
+                "name: " + name+ ", " +
+                "note: " + note + "}";
     }
 }

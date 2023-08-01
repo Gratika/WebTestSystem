@@ -1,3 +1,7 @@
+export interface IRole{
+   id:bigint;
+   name:string;
+}
 export interface IUser{
    id:bigint;
    login:string;
@@ -7,9 +11,9 @@ export interface IUser{
    name:string;
    surname:string;
    birthday:Date;
-   created_at: Date;
-   updated_at: Date;
-   roles:Array<string>;
+   created: Date;
+   updated: Date;
+   roles:Array<IRole>;
 
 }
 export interface GenericResponse {
@@ -30,8 +34,8 @@ export interface ISignUpInput {
 }
 
 export interface ILoginResponse {
-   status: string;
-   access_token: string;
+   login:string;
+   token: string;
 }
 
 export interface ISignUpResponse {
@@ -40,8 +44,30 @@ export interface ISignUpResponse {
 }
 
 export interface IUserResponse {
-   status: string;
-   data: {
-      user: IUser;
-   };
+   user: IUser|null;
+
+}
+
+export interface ISubCategoryDto{
+   id:bigint|null;
+   name:string;
+   categoryId: bigint|null;
+}
+export interface ICategoryDto{
+   id:bigint|null;
+   name:string;
+   subcategoryDtoList:Array<ISubCategoryDto>|null;
+}
+export interface ITest{
+   id:bigint|null;
+   name: String ;
+   isPublic: Boolean ;
+   description: String ;
+   owner:IOwner|null;
+   subcategoryId:bigint|null;
+}
+export interface IOwner{
+   id:number|null;
+   login:string;
+   email:string;
 }

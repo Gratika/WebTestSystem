@@ -1,9 +1,10 @@
-package com.testsystem.back_java.services;
+package com.testsystem.back_java.services.impl;
 
 import com.testsystem.back_java.dto.CategoryDto;
-import com.testsystem.back_java.dto.SubcategoryDto;
 import com.testsystem.back_java.models.Category;
+import com.testsystem.back_java.models.Subcategory;
 import com.testsystem.back_java.repo.CategoryRepository;
+import com.testsystem.back_java.services.ICategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,11 +14,11 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class CategoryService {
+public class CategoryServiceImpl implements ICategoryService {
     private final CategoryRepository categoryRepository;
 
     @Autowired
-    public CategoryService(CategoryRepository categoryRepository) {
+    public CategoryServiceImpl(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
     }
 
@@ -31,8 +32,9 @@ public class CategoryService {
         if(optionalCategory.isPresent()) {return optionalCategory.get();}
         return null;
     }
-    public void saveCategory(Category category){
-        categoryRepository.save(category);
+    public Category saveCategory(Category category){
+        Category saveCategory = categoryRepository.save(category);
+        return saveCategory;
     }
 
     public void updateCategory(Category category){
@@ -50,11 +52,17 @@ public class CategoryService {
 
     }
 
-    private CategoryDto convertEntityInCategoryDto(Category category){
+    @Override
+    public CategoryDto convertEntityInCategoryDto(Category category){
         CategoryDto categoryDto=new CategoryDto();
         categoryDto.setId(category.getId());
         categoryDto.setName(category.getName());
         categoryDto.setSubcategoryDtoList(new ArrayList<>());
         return categoryDto;
+    }
+    public Category convertCategoryDtoInEntity(CategoryDto categoryDto){
+        Category newCategory = new Category();
+        newCategory.setName(categoryDto.getName());
+        return newCategory;
     }
 }

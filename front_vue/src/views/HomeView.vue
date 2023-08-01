@@ -60,7 +60,7 @@ export default {
             </div>
         </div>
         <div class="main_button">
-            <router-link to="/public"><MyButton>Спробувати</MyButton></router-link>
+            <router-link to="/testList"><MyButton>Спробувати</MyButton></router-link>
         </div>
     </div>
 </template>
